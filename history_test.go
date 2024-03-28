@@ -11,17 +11,14 @@ const (
 
 func TestHistoryCRUD(t *testing.T) {
 
-	var z Context
-
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
 	// Get
 	testHistoryGet(t, z)
 }
 
-func testHistoryGet(t *testing.T, z Context) []HistoryFloatObject {
+func testHistoryGet(t *testing.T, z *Context) []HistoryFloatObject {
 
 	r := []HistoryFloatObject{}
 

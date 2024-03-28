@@ -11,11 +11,8 @@ const (
 
 func TestTemplateCRUD(t *testing.T) {
 
-	var z Context
-
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
 	// Preparing auxiliary data
 	hgCreatedIDs := testHostgroupCreate(t, z)
@@ -29,13 +26,13 @@ func TestTemplateCRUD(t *testing.T) {
 	testTemplateGet(t, z, tCreatedIDs, hgCreatedIDs)
 }
 
-func testTemplateCreate(t *testing.T, z Context, hgCreatedIDs []int) []int {
+func testTemplateCreate(t *testing.T, z *Context, tgCreatedIDs []int) []int {
 
-	var groups []HostgroupObject
+	var groups []TemplategroupObject
 
 	// Add groups to template
-	for _, e := range hgCreatedIDs {
-		groups = append(groups, HostgroupObject{
+	for _, e := range tgCreatedIDs {
+		groups = append(groups, TemplategroupObject{
 			GroupID: e,
 		})
 	}
@@ -59,7 +56,7 @@ func testTemplateCreate(t *testing.T, z Context, hgCreatedIDs []int) []int {
 	return tCreatedIDs
 }
 
-func testTemplateDelete(t *testing.T, z Context, tCreatedIDs []int) []int {
+func testTemplateDelete(t *testing.T, z *Context, tCreatedIDs []int) []int {
 
 	tDeletedIDs, err := z.TemplateDelete(tCreatedIDs)
 	if err != nil {
@@ -79,7 +76,7 @@ func testTemplateDelete(t *testing.T, z Context, tCreatedIDs []int) []int {
 	return tDeletedIDs
 }
 
-func testTemplateGet(t *testing.T, z Context, tCreatedIDs, hgCreatedIDs []int) []TemplateObject {
+func testTemplateGet(t *testing.T, z *Context, tCreatedIDs, hgCreatedIDs []int) []TemplateObject {
 
 	tObjects, err := z.TemplateGet(TemplateGetParams{
 		TemplateIDs: tCreatedIDs,

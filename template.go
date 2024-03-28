@@ -21,12 +21,12 @@ type TemplateObject struct {
 	Description string `json:"description,omitempty"`
 	Name        string `json:"name,omitempty"`
 
-	Groups          []HostgroupObject   `json:"groups,omitempty"`
-	Tags            []TemplateTagObject `json:"tags,omitempty"`
-	Templates       []TemplateObject    `json:"templates,omitempty"`
-	ParentTemplates []TemplateObject    `json:"parentTemplates,omitempty"`
-	Macros          []UsermacroObject   `json:"macros,omitempty"`
-	Hosts           []HostObject        `json:"hosts,omitempty"`
+	Groups          []TemplategroupObject `json:"groups,omitempty"`
+	Tags            []TemplateTagObject   `json:"tags,omitempty"`
+	Templates       []TemplateObject      `json:"templates,omitempty"`
+	ParentTemplates []TemplateObject      `json:"parentTemplates,omitempty"`
+	Macros          []UsermacroObject     `json:"macros,omitempty"`
+	Hosts           []HostObject          `json:"hosts,omitempty"`
 }
 
 // TemplateTagObject struct is used to store template tag data

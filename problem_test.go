@@ -6,17 +6,14 @@ import (
 
 func TestProblemCRUD(t *testing.T) {
 
-	var z Context
-
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
 	// Get
 	testProblemGet(t, z)
 }
 
-func testProblemGet(t *testing.T, z Context) {
+func testProblemGet(t *testing.T, z *Context) {
 
 	pObjects, err := z.ProblemGet(ProblemGetParams{
 		//ObjectIDs: []int{20143},

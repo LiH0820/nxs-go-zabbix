@@ -5,35 +5,38 @@ import (
 	"testing"
 )
 
-func loginTest(z *Context, t *testing.T) {
+const (
+	ZABBIX_HOST     = "http://10.130.13.169:8080/api_jsonrpc.php"
+	ZABBIX_USERNAME = "Admin"
+	ZABBIX_PASSWORD = "zabbix"
+)
+
+func GetZabbixContext(t *testing.T) *Context {
 
 	zbxHost := os.Getenv("ZABBIX_HOST")
 	if zbxHost == "" {
-		t.Fatal("Login error: undefined env var `ZABBIX_HOST`")
+		//t.Fatal("Login error: undefined env var `ZABBIX_HOST`")
+		zbxHost = ZABBIX_HOST
 	}
 
 	zbxUsername := os.Getenv("ZABBIX_USERNAME")
 	if zbxUsername == "" {
-		t.Fatal("Login error: undefined env var `ZABBIX_USERNAME`")
+		//t.Fatal("Login error: undefined env var `ZABBIX_USERNAME`")
+		zbxUsername = ZABBIX_USERNAME
 	}
 
 	zbxPassword := os.Getenv("ZABBIX_PASSWORD")
 	if zbxPassword == "" {
-		t.Fatal("Login error: undefined env var `ZABBIX_PASSWORD`")
+		//t.Fatal("Login error: undefined env var `ZABBIX_PASSWORD`")
+		zbxPassword = ZABBIX_PASSWORD
 	}
 
-	if err := z.Login(zbxHost, zbxUsername, zbxPassword); err != nil {
+	z, err := NewContext(zbxHost, zbxUsername, zbxPassword)
+	if err != nil {
 		t.Fatal("Login error: ", err)
 	} else {
 		t.Logf("Login: success")
 	}
-}
 
-func logoutTest(z *Context, t *testing.T) {
-
-	if err := z.Logout(); err != nil {
-		t.Fatal("Logout error: ", err)
-	} else {
-		t.Logf("Logout: success")
-	}
+	return z
 }

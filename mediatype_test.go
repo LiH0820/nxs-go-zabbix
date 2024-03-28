@@ -13,11 +13,8 @@ const (
 
 func TestMediatypeCRUD(t *testing.T) {
 
-	var z Context
-
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
 	// Create and delete
 	mtCreatedIDs := testMediatypeCreate(t, z)
@@ -27,7 +24,7 @@ func TestMediatypeCRUD(t *testing.T) {
 	testMediatypeGet(t, z, mtCreatedIDs)
 }
 
-func testMediatypeCreate(t *testing.T, z Context) []int {
+func testMediatypeCreate(t *testing.T, z *Context) []int {
 
 	hiCreatedIDs, err := z.MediatypeCreate([]MediatypeObject{
 		{
@@ -59,7 +56,7 @@ func testMediatypeCreate(t *testing.T, z Context) []int {
 	return hiCreatedIDs
 }
 
-func testMediatypeDelete(t *testing.T, z Context, mtCreatedIDs []int) []int {
+func testMediatypeDelete(t *testing.T, z *Context, mtCreatedIDs []int) []int {
 
 	mtDeletedIDs, err := z.MediatypeDelete(mtCreatedIDs)
 	if err != nil {
@@ -79,7 +76,7 @@ func testMediatypeDelete(t *testing.T, z Context, mtCreatedIDs []int) []int {
 	return mtDeletedIDs
 }
 
-func testMediatypeGet(t *testing.T, z Context, mtCreatedIDs []int) []MediatypeObject {
+func testMediatypeGet(t *testing.T, z *Context, mtCreatedIDs []int) []MediatypeObject {
 
 	mtObjects, err := z.MediatypeGet(MediatypeGetParams{
 		SelectUsers:  SelectExtendedOutput,

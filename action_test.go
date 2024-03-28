@@ -16,11 +16,8 @@ const (
 
 func TestActionCRUD(t *testing.T) {
 
-	var z Context
-
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
 	// Preparing auxiliary data
 	hgCreatedIDs := testHostgroupCreate(t, z)
@@ -34,7 +31,7 @@ func TestActionCRUD(t *testing.T) {
 	testActionGet(t, z, aCreatedIDs)
 }
 
-func testActionCreate(t *testing.T, z Context, hostgrpID, usergrpID int) []int {
+func testActionCreate(t *testing.T, z *Context, hostgrpID, usergrpID int) []int {
 
 	aCreatedIDs, err := z.ActionCreate([]ActionObject{
 		{
@@ -97,7 +94,7 @@ func testActionCreate(t *testing.T, z Context, hostgrpID, usergrpID int) []int {
 	return aCreatedIDs
 }
 
-func testActionDelete(t *testing.T, z Context, aCreatedIDs []int) []int {
+func testActionDelete(t *testing.T, z *Context, aCreatedIDs []int) []int {
 
 	aDeletedIDs, err := z.ActionDelete(aCreatedIDs)
 	if err != nil {
@@ -117,7 +114,7 @@ func testActionDelete(t *testing.T, z Context, aCreatedIDs []int) []int {
 	return aDeletedIDs
 }
 
-func testActionGet(t *testing.T, z Context, aCreatedIDs []int) []ActionObject {
+func testActionGet(t *testing.T, z *Context, aCreatedIDs []int) []ActionObject {
 
 	aObjects, err := z.ActionGet(ActionGetParams{
 		SelectOperations: SelectExtendedOutput,

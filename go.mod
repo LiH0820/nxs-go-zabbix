@@ -1,4 +1,4 @@
-module github.com/nixys/nxs-go-zabbix/v5
+module github.com/LiH0820/nxs-go-zabbix/v6
 
 go 1.20
 

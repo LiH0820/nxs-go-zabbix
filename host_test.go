@@ -15,18 +15,17 @@ const (
 
 func TestHostCRUD(t *testing.T) {
 
-	var z Context
+	z := GetZabbixContext(t)
+	defer DestroyContext(z)
 
-	// Login
-	loginTest(&z, t)
-	defer logoutTest(&z, t)
+	tgCreatedIDs := testTemplategroupCreate(t, z)
+	defer testTemplategroupDelete(t, z, tgCreatedIDs)
 
-	// Preparing auxiliary data
+	tCreatedIDs := testTemplateCreate(t, z, tgCreatedIDs)
+	defer testTemplateDelete(t, z, tCreatedIDs)
+
 	hgCreatedIDs := testHostgroupCreate(t, z)
 	defer testHostgroupDelete(t, z, hgCreatedIDs)
-
-	tCreatedIDs := testTemplateCreate(t, z, hgCreatedIDs)
-	defer testTemplateDelete(t, z, tCreatedIDs)
 
 	// Create and delete
 	hCreatedIDs := testHostCreate(t, z, hgCreatedIDs, tCreatedIDs)
@@ -39,7 +38,7 @@ func TestHostCRUD(t *testing.T) {
 	testHostGet(t, z, hCreatedIDs, tCreatedIDs, hgCreatedIDs)
 }
 
-func testHostCreate(t *testing.T, z Context, hgCreatedIDs, tCreatedIDs []int) []int {
+func testHostCreate(t *testing.T, z *Context, hgCreatedIDs, tCreatedIDs []int) []int {
 
 	var groups []HostgroupObject
 	var templates []TemplateObject
@@ -94,7 +93,7 @@ func testHostCreate(t *testing.T, z Context, hgCreatedIDs, tCreatedIDs []int) []
 	return hCreatedIDs
 }
 
-func testHostUpdate(t *testing.T, z Context, hCreatedIDs []int) []int {
+func testHostUpdate(t *testing.T, z *Context, hCreatedIDs []int) []int {
 
 	var hObjects []HostObject
 
@@ -124,7 +123,7 @@ func testHostUpdate(t *testing.T, z Context, hCreatedIDs []int) []int {
 	return hUpdatedIDs
 }
 
-func testHostDelete(t *testing.T, z Context, hCreatedIDs []int) []int {
+func testHostDelete(t *testing.T, z *Context, hCreatedIDs []int) []int {
 
 	hDeletedIDs, err := z.HostDelete(hCreatedIDs)
 	if err != nil {
@@ -144,7 +143,7 @@ func testHostDelete(t *testing.T, z Context, hCreatedIDs []int) []int {
 	return hDeletedIDs
 }
 
-func testHostGet(t *testing.T, z Context, hCreatedIDs, tCreatedIDs, hgCreatedIDs []int) []HostObject {
+func testHostGet(t *testing.T, z *Context, hCreatedIDs, tCreatedIDs, hgCreatedIDs []int) []HostObject {
 
 	hObjects, err := z.HostGet(HostGetParams{
 		SelectParentTemplates: SelectExtendedOutput,

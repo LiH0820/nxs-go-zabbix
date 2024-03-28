@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"sync/atomic"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -27,6 +28,21 @@ const (
 type Context struct {
 	sessionKey string
 	host       string
+}
+
+func NewContext(host, username, password string) (*Context, error) {
+	z := &Context{}
+
+	err := z.Login(host, username, password)
+	if err != nil {
+		return nil, err
+	}
+
+	return z, nil
+}
+
+func DestroyContext(z *Context) {
+	_ = z.Logout()
 }
 
 // GetParameters struct is used as embedded struct for some other structs within package
@@ -55,15 +71,15 @@ type SelectQuery interface{}
 type SelectFields []string
 
 type requestData struct {
-	JSONRPC string      `json:"jsonrpc"`
+	JsonRPC string      `json:"jsonrpc"`
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params,omitempty"`
 	Auth    string      `json:"auth,omitempty"`
-	ID      int         `json:"id"`
+	ID      uint64      `json:"id"`
 }
 
 type responseData struct {
-	JSONRPC string      `json:"jsonrpc"`
+	JsonRPC string      `json:"jsonrpc"`
 	Result  interface{} `json:"result"`
 	Error   struct {
 		Code    int    `json:"code"`
@@ -81,7 +97,7 @@ func (z *Context) Login(host, user, password string) error {
 	z.host = host
 
 	r := UserLoginParams{
-		User:     user,
+		Username: user,
 		Password: password,
 	}
 
@@ -106,6 +122,8 @@ func (z *Context) Logout() error {
 	return nil
 }
 
+var requestID uint64
+
 func (z *Context) request(method string, params interface{}, result interface{}) error {
 
 	resp := responseData{
@@ -113,11 +131,11 @@ func (z *Context) request(method string, params interface{}, result interface{})
 	}
 
 	req := requestData{
-		JSONRPC: "2.0",
+		JsonRPC: "2.0",
 		Method:  method,
 		Params:  params,
 		Auth:    z.sessionKey,
-		ID:      1,
+		ID:      atomic.AddUint64(&requestID, 1),
 	}
 
 	_, err := z.httpPost(req, &resp)
