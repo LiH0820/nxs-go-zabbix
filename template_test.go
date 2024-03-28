@@ -40,7 +40,7 @@ func testTemplateCreate(t *testing.T, z Context, hgCreatedIDs []int) []int {
 		})
 	}
 
-	tCreatedIDs, _, err := z.TemplateCreate([]TemplateObject{
+	tCreatedIDs, err := z.TemplateCreate([]TemplateObject{
 		{
 			Host:   testTemplateName,
 			Groups: groups,
@@ -61,7 +61,7 @@ func testTemplateCreate(t *testing.T, z Context, hgCreatedIDs []int) []int {
 
 func testTemplateDelete(t *testing.T, z Context, tCreatedIDs []int) []int {
 
-	tDeletedIDs, _, err := z.TemplateDelete(tCreatedIDs)
+	tDeletedIDs, err := z.TemplateDelete(tCreatedIDs)
 	if err != nil {
 		t.Fatal("Template delete error:", err)
 	}
@@ -81,7 +81,7 @@ func testTemplateDelete(t *testing.T, z Context, tCreatedIDs []int) []int {
 
 func testTemplateGet(t *testing.T, z Context, tCreatedIDs, hgCreatedIDs []int) []TemplateObject {
 
-	tObjects, _, err := z.TemplateGet(TemplateGetParams{
+	tObjects, err := z.TemplateGet(TemplateGetParams{
 		TemplateIDs: tCreatedIDs,
 		GroupIDs:    hgCreatedIDs,
 		GetParameters: GetParameters{

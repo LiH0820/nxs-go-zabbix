@@ -58,7 +58,7 @@ func testHostCreate(t *testing.T, z Context, hgCreatedIDs, tCreatedIDs []int) []
 		})
 	}
 
-	hCreatedIDs, _, err := z.HostCreate([]HostObject{
+	hCreatedIDs, err := z.HostCreate([]HostObject{
 		{
 			Host:      testHostName,
 			Groups:    groups,
@@ -106,7 +106,7 @@ func testHostUpdate(t *testing.T, z Context, hCreatedIDs []int) []int {
 		})
 	}
 
-	hUpdatedIDs, _, err := z.HostUpdate(hObjects)
+	hUpdatedIDs, err := z.HostUpdate(hObjects)
 	if err != nil {
 		t.Fatal("Host update error:", err)
 	}
@@ -126,7 +126,7 @@ func testHostUpdate(t *testing.T, z Context, hCreatedIDs []int) []int {
 
 func testHostDelete(t *testing.T, z Context, hCreatedIDs []int) []int {
 
-	hDeletedIDs, _, err := z.HostDelete(hCreatedIDs)
+	hDeletedIDs, err := z.HostDelete(hCreatedIDs)
 	if err != nil {
 		t.Fatal("Host delete error:", err)
 	}
@@ -146,7 +146,7 @@ func testHostDelete(t *testing.T, z Context, hCreatedIDs []int) []int {
 
 func testHostGet(t *testing.T, z Context, hCreatedIDs, tCreatedIDs, hgCreatedIDs []int) []HostObject {
 
-	hObjects, _, err := z.HostGet(HostGetParams{
+	hObjects, err := z.HostGet(HostGetParams{
 		SelectParentTemplates: SelectExtendedOutput,
 		SelectMacros:          SelectExtendedOutput,
 		HostIDs:               hCreatedIDs,

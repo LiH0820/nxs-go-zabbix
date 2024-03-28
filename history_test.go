@@ -25,7 +25,7 @@ func testHistoryGet(t *testing.T, z Context) []HistoryFloatObject {
 
 	r := []HistoryFloatObject{}
 
-	hObjects, _, err := z.HistoryGet(HistoryGetParams{
+	hObjects, err := z.HistoryGet(HistoryGetParams{
 		History: HistoryObjectTypeFloat,
 		//ItemIDs: []int{testHistoryItemID},
 		GetParameters: GetParameters{

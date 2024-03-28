@@ -72,66 +72,66 @@ type globalmacroDeleteResult struct {
 }
 
 // UsermacroGet gets global or host macros according to the given parameters
-func (z *Context) UsermacroGet(params UsermacroGetParams) ([]UsermacroObject, int, error) {
+func (z *Context) UsermacroGet(params UsermacroGetParams) ([]UsermacroObject, error) {
 
 	var result []UsermacroObject
 
-	status, err := z.request("usermacro.get", params, &result)
+	err := z.request("usermacro.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // HostmacroCreate creates new hostmacros
-func (z *Context) HostmacroCreate(params []UsermacroObject) ([]int, int, error) {
+func (z *Context) HostmacroCreate(params []UsermacroObject) ([]int, error) {
 
 	var result hostmacroCreateResult
 
-	status, err := z.request("usermacro.create", params, &result)
+	err := z.request("usermacro.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.HostmacroIDs, status, nil
+	return result.HostmacroIDs, nil
 }
 
 // GlobalmacroCreate creates new globalmacros
-func (z *Context) GlobalmacroCreate(params []UsermacroObject) ([]int, int, error) {
+func (z *Context) GlobalmacroCreate(params []UsermacroObject) ([]int, error) {
 
 	var result globalmacroCreateResult
 
-	status, err := z.request("usermacro.createglobal", params, &result)
+	err := z.request("usermacro.createglobal", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.GlobalmacroIDs, status, nil
+	return result.GlobalmacroIDs, nil
 }
 
 // HostmacroDelete deletes hostmacros
-func (z *Context) HostmacroDelete(hostmacroIDs []int) ([]int, int, error) {
+func (z *Context) HostmacroDelete(hostmacroIDs []int) ([]int, error) {
 
 	var result hostmacroDeleteResult
 
-	status, err := z.request("usermacro.delete", hostmacroIDs, &result)
+	err := z.request("usermacro.delete", hostmacroIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.HostmacroIDs, status, nil
+	return result.HostmacroIDs, nil
 }
 
 // GlobalmacroDelete deletes globalmacros
-func (z *Context) GlobalmacroDelete(globalmacroIDs []int) ([]int, int, error) {
+func (z *Context) GlobalmacroDelete(globalmacroIDs []int) ([]int, error) {
 
 	var result globalmacroDeleteResult
 
-	status, err := z.request("usermacro.deleteglobal", globalmacroIDs, &result)
+	err := z.request("usermacro.deleteglobal", globalmacroIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.GlobalmacroIDs, status, nil
+	return result.GlobalmacroIDs, nil
 }

@@ -344,40 +344,40 @@ type actionDeleteResult struct {
 }
 
 // ActionGet gets actions
-func (z *Context) ActionGet(params ActionGetParams) ([]ActionObject, int, error) {
+func (z *Context) ActionGet(params ActionGetParams) ([]ActionObject, error) {
 
 	var result []ActionObject
 
-	status, err := z.request("action.get", params, &result)
+	err := z.request("action.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // ActionCreate creates actions
-func (z *Context) ActionCreate(params []ActionObject) ([]int, int, error) {
+func (z *Context) ActionCreate(params []ActionObject) ([]int, error) {
 
 	var result actionCreateResult
 
-	status, err := z.request("action.create", params, &result)
+	err := z.request("action.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.ActionIDs, status, nil
+	return result.ActionIDs, nil
 }
 
 // ActionDelete deletes actions
-func (z *Context) ActionDelete(actionIDs []int) ([]int, int, error) {
+func (z *Context) ActionDelete(actionIDs []int) ([]int, error) {
 
 	var result actionDeleteResult
 
-	status, err := z.request("action.delete", actionIDs, &result)
+	err := z.request("action.delete", actionIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.ActionIDs, status, nil
+	return result.ActionIDs, nil
 }

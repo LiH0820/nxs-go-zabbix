@@ -27,7 +27,7 @@ func TestHostgroupCRUD(t *testing.T) {
 
 func testHostgroupCreate(t *testing.T, z Context) []int {
 
-	hgCreatedIDs, _, err := z.HostgroupCreate([]HostgroupObject{
+	hgCreatedIDs, err := z.HostgroupCreate([]HostgroupObject{
 		{
 			Name: testHostgroupName,
 		},
@@ -47,7 +47,7 @@ func testHostgroupCreate(t *testing.T, z Context) []int {
 
 func testHostgroupDelete(t *testing.T, z Context, hgCreatedIDs []int) []int {
 
-	hgDeletedIDs, _, err := z.HostgroupDelete(hgCreatedIDs)
+	hgDeletedIDs, err := z.HostgroupDelete(hgCreatedIDs)
 	if err != nil {
 		t.Fatal("Hostgroup delete error:", err)
 	}
@@ -67,7 +67,7 @@ func testHostgroupDelete(t *testing.T, z Context, hgCreatedIDs []int) []int {
 
 func testHostgroupGet(t *testing.T, z Context, hgCreatedIDs []int) []HostgroupObject {
 
-	hgObjects, _, err := z.HostgroupGet(HostgroupGetParams{
+	hgObjects, err := z.HostgroupGet(HostgroupGetParams{
 		GroupIDs: hgCreatedIDs,
 		GetParameters: GetParameters{
 			Filter: map[string]interface{}{

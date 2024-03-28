@@ -87,40 +87,40 @@ type templateDeleteResult struct {
 }
 
 // TemplateGet gets templates
-func (z *Context) TemplateGet(params TemplateGetParams) ([]TemplateObject, int, error) {
+func (z *Context) TemplateGet(params TemplateGetParams) ([]TemplateObject, error) {
 
 	var result []TemplateObject
 
-	status, err := z.request("template.get", params, &result)
+	err := z.request("template.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // TemplateCreate creates templates
-func (z *Context) TemplateCreate(params []TemplateObject) ([]int, int, error) {
+func (z *Context) TemplateCreate(params []TemplateObject) ([]int, error) {
 
 	var result templateCreateResult
 
-	status, err := z.request("template.create", params, &result)
+	err := z.request("template.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.TemplateIDs, status, nil
+	return result.TemplateIDs, nil
 }
 
 // TemplateDelete deletes templates
-func (z *Context) TemplateDelete(templateIDs []int) ([]int, int, error) {
+func (z *Context) TemplateDelete(templateIDs []int) ([]int, error) {
 
 	var result templateDeleteResult
 
-	status, err := z.request("template.delete", templateIDs, &result)
+	err := z.request("template.delete", templateIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.TemplateIDs, status, nil
+	return result.TemplateIDs, nil
 }

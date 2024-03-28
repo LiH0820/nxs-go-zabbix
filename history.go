@@ -83,7 +83,7 @@ type HistoryGetParams struct {
 }
 
 // HistoryGet gets history
-func (z *Context) HistoryGet(params HistoryGetParams) (interface{}, int, error) {
+func (z *Context) HistoryGet(params HistoryGetParams) (interface{}, error) {
 
 	var result interface{}
 
@@ -99,13 +99,13 @@ func (z *Context) HistoryGet(params HistoryGetParams) (interface{}, int, error) 
 	case HistoryObjectTypeText:
 		result = &([]HistoryTextObject{})
 	default:
-		return nil, 0, fmt.Errorf("Unknown history type")
+		return nil, fmt.Errorf("Unknown history type")
 	}
 
-	status, err := z.request("history.get", params, result)
+	err := z.request("history.get", params, result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }

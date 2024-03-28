@@ -47,7 +47,7 @@ func testUserCreate(t *testing.T, z Context, ugCreatedIDs []int) []int {
 		})
 	}
 
-	uCreatedIDs, _, err := z.UserCreate([]UserObject{
+	uCreatedIDs, err := z.UserCreate([]UserObject{
 		{
 			Alias:      testUserAlias,
 			Name:       testUserName,
@@ -85,7 +85,7 @@ func testUserCreate(t *testing.T, z Context, ugCreatedIDs []int) []int {
 
 func testUserDelete(t *testing.T, z Context, uCreatedIDs []int) []int {
 
-	uDeletedIDs, _, err := z.UserDelete(uCreatedIDs)
+	uDeletedIDs, err := z.UserDelete(uCreatedIDs)
 	if err != nil {
 		t.Fatal("User delete error:", err)
 	}
@@ -105,7 +105,7 @@ func testUserDelete(t *testing.T, z Context, uCreatedIDs []int) []int {
 
 func testUserGet(t *testing.T, z Context, uCreatedIDs []int) []UserObject {
 
-	uObjects, _, err := z.UserGet(UserGetParams{
+	uObjects, err := z.UserGet(UserGetParams{
 		UserIDs:          uCreatedIDs,
 		SelectMedias:     SelectExtendedOutput,
 		SelectMediatypes: SelectExtendedOutput,

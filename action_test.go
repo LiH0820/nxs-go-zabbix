@@ -36,7 +36,7 @@ func TestActionCRUD(t *testing.T) {
 
 func testActionCreate(t *testing.T, z Context, hostgrpID, usergrpID int) []int {
 
-	aCreatedIDs, _, err := z.ActionCreate([]ActionObject{
+	aCreatedIDs, err := z.ActionCreate([]ActionObject{
 		{
 			Name:        testActionName,
 			Eventsource: 0,
@@ -99,7 +99,7 @@ func testActionCreate(t *testing.T, z Context, hostgrpID, usergrpID int) []int {
 
 func testActionDelete(t *testing.T, z Context, aCreatedIDs []int) []int {
 
-	aDeletedIDs, _, err := z.ActionDelete(aCreatedIDs)
+	aDeletedIDs, err := z.ActionDelete(aCreatedIDs)
 	if err != nil {
 		t.Fatal("Action delete error:", err)
 	}
@@ -119,7 +119,7 @@ func testActionDelete(t *testing.T, z Context, aCreatedIDs []int) []int {
 
 func testActionGet(t *testing.T, z Context, aCreatedIDs []int) []ActionObject {
 
-	aObjects, _, err := z.ActionGet(ActionGetParams{
+	aObjects, err := z.ActionGet(ActionGetParams{
 		SelectOperations: SelectExtendedOutput,
 		SelectFilter:     SelectExtendedOutput,
 		ActionIDs:        aCreatedIDs,

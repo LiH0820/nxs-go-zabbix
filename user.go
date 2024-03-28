@@ -117,64 +117,64 @@ type userDeleteResult struct {
 }
 
 // UserGet gets users
-func (z *Context) UserGet(params UserGetParams) ([]UserObject, int, error) {
+func (z *Context) UserGet(params UserGetParams) ([]UserObject, error) {
 
 	var result []UserObject
 
-	status, err := z.request("user.get", params, &result)
+	err := z.request("user.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // UserCreate creates users
-func (z *Context) UserCreate(params []UserObject) ([]int, int, error) {
+func (z *Context) UserCreate(params []UserObject) ([]int, error) {
 
 	var result userCreateResult
 
-	status, err := z.request("user.create", params, &result)
+	err := z.request("user.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.UserIDs, status, nil
+	return result.UserIDs, nil
 }
 
 // UserDelete deletes users
-func (z *Context) UserDelete(userIDs []int) ([]int, int, error) {
+func (z *Context) UserDelete(userIDs []int) ([]int, error) {
 
 	var result userDeleteResult
 
-	status, err := z.request("user.delete", userIDs, &result)
+	err := z.request("user.delete", userIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.UserIDs, status, nil
+	return result.UserIDs, nil
 }
 
-func (z *Context) userLogin(params UserLoginParams) (string, int, error) {
+func (z *Context) userLogin(params UserLoginParams) (string, error) {
 
 	var result string
 
-	status, err := z.request("user.login", params, &result)
+	err := z.request("user.login", params, &result)
 	if err != nil {
-		return "", status, err
+		return "", err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
-func (z *Context) userLogout() (bool, int, error) {
+func (z *Context) userLogout() (bool, error) {
 
 	var result bool
 
-	status, err := z.request("user.logout", []string{}, &result)
+	err := z.request("user.logout", []string{}, &result)
 	if err != nil {
-		return false, status, err
+		return false, err
 	}
 
-	return result, status, nil
+	return result, nil
 }

@@ -85,7 +85,7 @@ func (z *Context) Login(host, user, password string) error {
 		Password: password,
 	}
 
-	if z.sessionKey, _, err = z.userLogin(r); err != nil {
+	if z.sessionKey, err = z.userLogin(r); err != nil {
 		return err
 	}
 
@@ -95,7 +95,7 @@ func (z *Context) Login(host, user, password string) error {
 // Logout destroys the Zabbix session
 func (z *Context) Logout() error {
 
-	_, _, err := z.userLogout()
+	_, err := z.userLogout()
 
 	z.sessionKey = ""
 
@@ -106,7 +106,7 @@ func (z *Context) Logout() error {
 	return nil
 }
 
-func (z *Context) request(method string, params interface{}, result interface{}) (int, error) {
+func (z *Context) request(method string, params interface{}, result interface{}) error {
 
 	resp := responseData{
 		Result: result,
@@ -120,16 +120,16 @@ func (z *Context) request(method string, params interface{}, result interface{})
 		ID:      1,
 	}
 
-	status, err := z.httpPost(req, &resp)
+	_, err := z.httpPost(req, &resp)
 	if err != nil {
-		return status, err
+		return err
 	}
 
 	if resp.Error.Code != 0 {
-		return status, errors.New(resp.Error.Data + " " + resp.Error.Message)
+		return errors.New(resp.Error.Data + " " + resp.Error.Message)
 	}
 
-	return status, nil
+	return nil
 }
 
 func (z *Context) httpPost(in interface{}, out interface{}) (int, error) {

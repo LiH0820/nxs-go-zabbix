@@ -38,7 +38,7 @@ func TestHostinterfaceCRUD(t *testing.T) {
 
 func testHostinterfaceCreate(t *testing.T, z Context, hCreatedID int) []int {
 
-	hiCreatedIDs, _, err := z.HostinterfaceCreate([]HostinterfaceObject{
+	hiCreatedIDs, err := z.HostinterfaceCreate([]HostinterfaceObject{
 		{
 			HostID: hCreatedID,
 			IP:     testHostinterfaceIP,
@@ -64,7 +64,7 @@ func testHostinterfaceCreate(t *testing.T, z Context, hCreatedID int) []int {
 
 func testHostinterfaceDelete(t *testing.T, z Context, hiCreatedIDs []int) []int {
 
-	hiDeletedIDs, _, err := z.HostinterfaceDelete(hiCreatedIDs)
+	hiDeletedIDs, err := z.HostinterfaceDelete(hiCreatedIDs)
 	if err != nil {
 		t.Fatal("Hostinterface delete error:", err)
 	}
@@ -84,7 +84,7 @@ func testHostinterfaceDelete(t *testing.T, z Context, hiCreatedIDs []int) []int 
 
 func testHostinterfaceGet(t *testing.T, z Context, hCreatedIDs []int) []HostinterfaceObject {
 
-	hiObjects, _, err := z.HostinterfaceGet(HostinterfaceGetParams{
+	hiObjects, err := z.HostinterfaceGet(HostinterfaceGetParams{
 		SelectHosts: SelectExtendedOutput,
 		HostIDs:     hCreatedIDs,
 		GetParameters: GetParameters{

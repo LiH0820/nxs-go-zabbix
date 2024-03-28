@@ -31,7 +31,7 @@ func TestUsergroupCRUD(t *testing.T) {
 
 func testUsergroupCreate(t *testing.T, z Context) []int {
 
-	ugCreatedIDs, _, err := z.UsergroupCreate([]UsergroupObject{
+	ugCreatedIDs, err := z.UsergroupCreate([]UsergroupObject{
 		{
 			Name: testUsergroupName,
 		},
@@ -61,7 +61,7 @@ func testUsergroupUpdate(t *testing.T, z Context, ugCreatedIDs []int) []int {
 		})
 	}
 
-	ugUpdatedIDs, _, err := z.UsergroupUpdate(ugObjects)
+	ugUpdatedIDs, err := z.UsergroupUpdate(ugObjects)
 	if err != nil {
 		t.Fatal("Usergroup update error:", err)
 	}
@@ -81,7 +81,7 @@ func testUsergroupUpdate(t *testing.T, z Context, ugCreatedIDs []int) []int {
 
 func testUsergroupDelete(t *testing.T, z Context, ugCreatedIDs []int) []int {
 
-	ugDeletedIDs, _, err := z.UsergroupDelete(ugCreatedIDs)
+	ugDeletedIDs, err := z.UsergroupDelete(ugCreatedIDs)
 	if err != nil {
 		t.Fatal("Usergroup delete error:", err)
 	}
@@ -101,7 +101,7 @@ func testUsergroupDelete(t *testing.T, z Context, ugCreatedIDs []int) []int {
 
 func testUsergroupGet(t *testing.T, z Context, ugCreatedIDs []int) []UsergroupObject {
 
-	ugObjects, _, err := z.UsergroupGet(UsergroupGetParams{
+	ugObjects, err := z.UsergroupGet(UsergroupGetParams{
 		UsrgrpIDs:    ugCreatedIDs,
 		SelectRights: SelectExtendedOutput,
 		SelectUsers:  SelectExtendedOutput,

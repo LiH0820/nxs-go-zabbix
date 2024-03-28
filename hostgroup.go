@@ -72,40 +72,40 @@ type hostgroupDeleteResult struct {
 }
 
 // HostgroupGet gets hostgroups
-func (z *Context) HostgroupGet(params HostgroupGetParams) ([]HostgroupObject, int, error) {
+func (z *Context) HostgroupGet(params HostgroupGetParams) ([]HostgroupObject, error) {
 
 	var result []HostgroupObject
 
-	status, err := z.request("hostgroup.get", params, &result)
+	err := z.request("hostgroup.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // HostgroupCreate creates hostgroups
-func (z *Context) HostgroupCreate(params []HostgroupObject) ([]int, int, error) {
+func (z *Context) HostgroupCreate(params []HostgroupObject) ([]int, error) {
 
 	var result hostgroupCreateResult
 
-	status, err := z.request("hostgroup.create", params, &result)
+	err := z.request("hostgroup.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.GroupIDs, status, nil
+	return result.GroupIDs, nil
 }
 
 // HostgroupDelete deletes hostgroups
-func (z *Context) HostgroupDelete(groupIDs []int) ([]int, int, error) {
+func (z *Context) HostgroupDelete(groupIDs []int) ([]int, error) {
 
 	var result hostgroupDeleteResult
 
-	status, err := z.request("hostgroup.delete", groupIDs, &result)
+	err := z.request("hostgroup.delete", groupIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.GroupIDs, status, nil
+	return result.GroupIDs, nil
 }

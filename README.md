@@ -65,7 +65,7 @@ func main() {
 	defer zabbixLogout(&z)
 
 	/* Get all hosts */
-	hObjects, _, err := z.HostGet(zabbix.HostGetParams{
+	hObjects, err := z.HostGet(zabbix.HostGetParams{
 		GetParameters: zabbix.GetParameters{
 			Output: zabbix.SelectExtendedOutput,
 		},

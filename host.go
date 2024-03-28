@@ -241,53 +241,53 @@ type hostDeleteResult struct {
 }
 
 // HostGet gets hosts
-func (z *Context) HostGet(params HostGetParams) ([]HostObject, int, error) {
+func (z *Context) HostGet(params HostGetParams) ([]HostObject, error) {
 
 	var result []HostObject
 
-	status, err := z.request("host.get", params, &result)
+	err := z.request("host.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // HostCreate creates hosts
-func (z *Context) HostCreate(params []HostObject) ([]int, int, error) {
+func (z *Context) HostCreate(params []HostObject) ([]int, error) {
 
 	var result hostCreateResult
 
-	status, err := z.request("host.create", params, &result)
+	err := z.request("host.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.HostIDs, status, nil
+	return result.HostIDs, nil
 }
 
 // HostUpdate updates hosts
-func (z *Context) HostUpdate(params []HostObject) ([]int, int, error) {
+func (z *Context) HostUpdate(params []HostObject) ([]int, error) {
 
 	var result hostUpdateResult
 
-	status, err := z.request("host.update", params, &result)
+	err := z.request("host.update", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.HostIDs, status, nil
+	return result.HostIDs, nil
 }
 
 // HostDelete deletes hosts
-func (z *Context) HostDelete(hostIDs []int) ([]int, int, error) {
+func (z *Context) HostDelete(hostIDs []int) ([]int, error) {
 
 	var result hostDeleteResult
 
-	status, err := z.request("host.delete", hostIDs, &result)
+	err := z.request("host.delete", hostIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.HostIDs, status, nil
+	return result.HostIDs, nil
 }

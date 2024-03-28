@@ -153,40 +153,40 @@ type mediatypeDeleteResult struct {
 }
 
 // MediatypeGet gets mediatypes
-func (z *Context) MediatypeGet(params MediatypeGetParams) ([]MediatypeObject, int, error) {
+func (z *Context) MediatypeGet(params MediatypeGetParams) ([]MediatypeObject, error) {
 
 	var result []MediatypeObject
 
-	status, err := z.request("mediatype.get", params, &result)
+	err := z.request("mediatype.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // MediatypeCreate creates mediatypes
-func (z *Context) MediatypeCreate(params []MediatypeObject) ([]int, int, error) {
+func (z *Context) MediatypeCreate(params []MediatypeObject) ([]int, error) {
 
 	var result mediatypeCreateResult
 
-	status, err := z.request("mediatype.create", params, &result)
+	err := z.request("mediatype.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.MediatypeIDs, status, nil
+	return result.MediatypeIDs, nil
 }
 
 // MediatypeDelete deletes mediatypes
-func (z *Context) MediatypeDelete(mediatypeIDs []int) ([]int, int, error) {
+func (z *Context) MediatypeDelete(mediatypeIDs []int) ([]int, error) {
 
 	var result mediatypeDeleteResult
 
-	status, err := z.request("mediatype.delete", mediatypeIDs, &result)
+	err := z.request("mediatype.delete", mediatypeIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.MediatypeIDs, status, nil
+	return result.MediatypeIDs, nil
 }

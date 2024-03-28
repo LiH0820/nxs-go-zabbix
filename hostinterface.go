@@ -112,40 +112,40 @@ type hostinterfaceDeleteResult struct {
 }
 
 // HostinterfaceGet gets hostinterfaces
-func (z *Context) HostinterfaceGet(params HostinterfaceGetParams) ([]HostinterfaceObject, int, error) {
+func (z *Context) HostinterfaceGet(params HostinterfaceGetParams) ([]HostinterfaceObject, error) {
 
 	var result []HostinterfaceObject
 
-	status, err := z.request("hostinterface.get", params, &result)
+	err := z.request("hostinterface.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // HostinterfaceCreate creates hostinterfaces
-func (z *Context) HostinterfaceCreate(params []HostinterfaceObject) ([]int, int, error) {
+func (z *Context) HostinterfaceCreate(params []HostinterfaceObject) ([]int, error) {
 
 	var result hostinterfaceCreateResult
 
-	status, err := z.request("hostinterface.create", params, &result)
+	err := z.request("hostinterface.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.InterfaceIDs, status, nil
+	return result.InterfaceIDs, nil
 }
 
 // HostinterfaceDelete deletes hostinterfaces
-func (z *Context) HostinterfaceDelete(hostinterfaceIDs []int) ([]int, int, error) {
+func (z *Context) HostinterfaceDelete(hostinterfaceIDs []int) ([]int, error) {
 
 	var result hostinterfaceDeleteResult
 
-	status, err := z.request("hostinterface.delete", hostinterfaceIDs, &result)
+	err := z.request("hostinterface.delete", hostinterfaceIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.InterfaceIDs, status, nil
+	return result.InterfaceIDs, nil
 }

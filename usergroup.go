@@ -94,53 +94,53 @@ type usergroupDeleteResult struct {
 }
 
 // UsergroupGet gets usergroups
-func (z *Context) UsergroupGet(params UsergroupGetParams) ([]UsergroupObject, int, error) {
+func (z *Context) UsergroupGet(params UsergroupGetParams) ([]UsergroupObject, error) {
 
 	var result []UsergroupObject
 
-	status, err := z.request("usergroup.get", params, &result)
+	err := z.request("usergroup.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }
 
 // UsergroupCreate creates usergroups
-func (z *Context) UsergroupCreate(params []UsergroupObject) ([]int, int, error) {
+func (z *Context) UsergroupCreate(params []UsergroupObject) ([]int, error) {
 
 	var result usergroupCreateResult
 
-	status, err := z.request("usergroup.create", params, &result)
+	err := z.request("usergroup.create", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.UsrgrpIDs, status, nil
+	return result.UsrgrpIDs, nil
 }
 
 // UsergroupUpdate updates usergroups
-func (z *Context) UsergroupUpdate(params []UsergroupObject) ([]int, int, error) {
+func (z *Context) UsergroupUpdate(params []UsergroupObject) ([]int, error) {
 
 	var result usergroupUpdateResult
 
-	status, err := z.request("usergroup.update", params, &result)
+	err := z.request("usergroup.update", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.UsrgrpIDs, status, nil
+	return result.UsrgrpIDs, nil
 }
 
 // UsergroupDelete deletes usergroups
-func (z *Context) UsergroupDelete(usergroupIDs []int) ([]int, int, error) {
+func (z *Context) UsergroupDelete(usergroupIDs []int) ([]int, error) {
 
 	var result usergroupDeleteResult
 
-	status, err := z.request("usergroup.delete", usergroupIDs, &result)
+	err := z.request("usergroup.delete", usergroupIDs, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result.UsrgrpIDs, status, nil
+	return result.UsrgrpIDs, nil
 }

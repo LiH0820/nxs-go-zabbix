@@ -135,14 +135,14 @@ type ProblemGetParams struct {
 }
 
 // ProblemGet gets problems
-func (z *Context) ProblemGet(params ProblemGetParams) ([]ProblemObject, int, error) {
+func (z *Context) ProblemGet(params ProblemGetParams) ([]ProblemObject, error) {
 
 	var result []ProblemObject
 
-	status, err := z.request("problem.get", params, &result)
+	err := z.request("problem.get", params, &result)
 	if err != nil {
-		return nil, status, err
+		return nil, err
 	}
 
-	return result, status, nil
+	return result, nil
 }

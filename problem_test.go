@@ -18,7 +18,7 @@ func TestProblemCRUD(t *testing.T) {
 
 func testProblemGet(t *testing.T, z Context) {
 
-	pObjects, _, err := z.ProblemGet(ProblemGetParams{
+	pObjects, err := z.ProblemGet(ProblemGetParams{
 		//ObjectIDs: []int{20143},
 		// ... Add other fields as needed
 	})
