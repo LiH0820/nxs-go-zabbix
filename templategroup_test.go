@@ -20,7 +20,7 @@ func TestTemplategroupCRUD(t *testing.T) {
 	testTemplategroupGet(t, z)
 }
 
-func testTemplategroupCreate(t *testing.T, z *Context) []int {
+func testTemplategroupCreate(t *testing.T, z *Context) []string {
 
 	tgCreatedIDs, err := z.TemplategroupCreate([]TemplategroupObject{
 		{
@@ -40,7 +40,7 @@ func testTemplategroupCreate(t *testing.T, z *Context) []int {
 	return tgCreatedIDs
 }
 
-func testTemplategroupDelete(t *testing.T, z *Context, tgCreatedIDs []int) []int {
+func testTemplategroupDelete(t *testing.T, z *Context, tgCreatedIDs []string) []string {
 
 	tgDeletedIDs, err := z.TemplategroupDelete(tgCreatedIDs)
 	if err != nil {

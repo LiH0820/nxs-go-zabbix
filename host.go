@@ -107,9 +107,9 @@ const (
 
 // HostObject struct is used to store host operations results
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/host/object#host
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/host/object#host
 type HostObject struct {
-	HostID            int    `json:"hostid,omitempty"`
+	HostID            string `json:"hostid,omitempty"`
 	Host              string `json:"host,omitempty"`
 	Available         int    `json:"available,omitempty"` // has defined consts, see above
 	Description       string `json:"description,omitempty"`
@@ -159,7 +159,7 @@ type HostObject struct {
 
 // HostTagObject struct is used to store host tag
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/host/object#host_tag
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/host/object#host_tag
 type HostTagObject struct {
 	Tag   string `json:"tag"`
 	Value string `json:"value,omitempty"`
@@ -169,25 +169,25 @@ type HostTagObject struct {
 
 // HostGetParams struct is used for host get requests
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/host/get#parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/host/get#parameters
 type HostGetParams struct {
 	GetParameters
 
-	GroupIDs       []int `json:"groupids,omitempty"`
-	ApplicationIDs []int `json:"applicationids,omitempty"`
-	DserviceIDs    []int `json:"dserviceids,omitempty"`
-	GraphIDs       []int `json:"graphids,omitempty"`
-	HostIDs        []int `json:"hostids,omitempty"`
-	HttptestIDs    []int `json:"httptestids,omitempty"`
-	InterfaceIDs   []int `json:"interfaceids,omitempty"`
-	ItemIDs        []int `json:"itemids,omitempty"`
-	MaintenanceIDs []int `json:"maintenanceids,omitempty"`
-	MonitoredHosts bool  `json:"monitored_hosts,omitempty"`
-	ProxyHosts     bool  `json:"proxy_hosts,omitempty"`
-	ProxyIDs       []int `json:"proxyids,omitempty"`
-	TemplatedHosts bool  `json:"templated_hosts,omitempty"`
-	TemplateIDs    []int `json:"templateids,omitempty"`
-	TriggerIDs     []int `json:"triggerids,omitempty"`
+	GroupIDs       []string `json:"groupids,omitempty"`
+	ApplicationIDs []string `json:"applicationids,omitempty"`
+	DserviceIDs    []string `json:"dserviceids,omitempty"`
+	GraphIDs       []string `json:"graphids,omitempty"`
+	HostIDs        []string `json:"hostids,omitempty"`
+	HttptestIDs    []string `json:"httptestids,omitempty"`
+	InterfaceIDs   []string `json:"interfaceids,omitempty"`
+	ItemIDs        []string `json:"itemids,omitempty"`
+	MaintenanceIDs []string `json:"maintenanceids,omitempty"`
+	MonitoredHosts bool     `json:"monitored_hosts,omitempty"`
+	ProxyHosts     bool     `json:"proxy_hosts,omitempty"`
+	ProxyIDs       []string `json:"proxyids,omitempty"`
+	TemplatedHosts bool     `json:"templated_hosts,omitempty"`
+	TemplateIDs    []string `json:"templateids,omitempty"`
+	TriggerIDs     []string `json:"triggerids,omitempty"`
 
 	WithItems                     bool            `json:"with_items,omitempty"`
 	WithItemPrototypes            bool            `json:"with_item_prototypes,omitempty"`
@@ -203,7 +203,7 @@ type HostGetParams struct {
 	WithTriggers                  bool            `json:"with_triggers,omitempty"`
 	WithProblemsSuppressed        bool            `json:"withProblemsSuppressed,omitempty"`
 	Evaltype                      int             `json:"evaltype,omitempty"` // has defined consts, see above
-	Severities                    []int           `json:"severities,omitempty"`
+	Severities                    []string        `json:"severities,omitempty"`
 	Tags                          []HostTagObject `json:"tags,omitempty"`
 	InheritedTags                 bool            `json:"inheritedTags,omitempty"`
 
@@ -227,17 +227,17 @@ type HostGetParams struct {
 
 // Structure to store creation result
 type hostCreateResult struct {
-	HostIDs []int `json:"hostids"`
+	HostIDs []string `json:"hostids"`
 }
 
 // Structure to store updation result
 type hostUpdateResult struct {
-	HostIDs []int `json:"hostids"`
+	HostIDs []string `json:"hostids"`
 }
 
 // Structure to store deletion result
 type hostDeleteResult struct {
-	HostIDs []int `json:"hostids"`
+	HostIDs []string `json:"hostids"`
 }
 
 // HostGet gets hosts
@@ -254,7 +254,7 @@ func (z *Context) HostGet(params HostGetParams) ([]HostObject, error) {
 }
 
 // HostCreate creates hosts
-func (z *Context) HostCreate(params []HostObject) ([]int, error) {
+func (z *Context) HostCreate(params []HostObject) ([]string, error) {
 
 	var result hostCreateResult
 
@@ -267,7 +267,7 @@ func (z *Context) HostCreate(params []HostObject) ([]int, error) {
 }
 
 // HostUpdate updates hosts
-func (z *Context) HostUpdate(params []HostObject) ([]int, error) {
+func (z *Context) HostUpdate(params []HostObject) ([]string, error) {
 
 	var result hostUpdateResult
 
@@ -280,7 +280,7 @@ func (z *Context) HostUpdate(params []HostObject) ([]int, error) {
 }
 
 // HostDelete deletes hosts
-func (z *Context) HostDelete(hostIDs []int) ([]int, error) {
+func (z *Context) HostDelete(hostIDs []string) ([]string, error) {
 
 	var result hostDeleteResult
 

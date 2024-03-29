@@ -28,7 +28,7 @@ const (
 
 // UserObject struct is used to store user operations results
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/user/object
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/user/object
 type UserObject struct {
 	UserID        int    `json:"userid,omitempty"`
 	Alias         string `json:"alias,omitempty"`
@@ -60,7 +60,7 @@ type UserObject struct {
 
 // MediaObject struct is used to store media operations results
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/user/object#media
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/user/object#media
 type MediaObject struct {
 	MediaID     int      `json:"mediaid,omitempty"`
 	MediaTypeID int      `json:"mediatypeid,omitempty"`
@@ -72,7 +72,7 @@ type MediaObject struct {
 
 // UserLoginParams struct is used for login requests
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/user/login#parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/user/login#parameters
 type UserLoginParams struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -81,7 +81,7 @@ type UserLoginParams struct {
 
 // UserDataObject struct is used to store authenticated user additional info
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/user/login#return_values
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/user/login#return_values
 type UserDataObject struct {
 	DebugMode bool   `json:"debug_mode,omitempty"`
 	GUIAccess int    `json:"gui_access,omitempty"`
@@ -91,7 +91,7 @@ type UserDataObject struct {
 
 // UserGetParams struct is used for user get requests
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/user/get#parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/user/get#parameters
 type UserGetParams struct {
 	GetParameters
 

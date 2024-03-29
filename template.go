@@ -14,9 +14,9 @@ const (
 
 // TemplateObject struct is used to store template operations results
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/template/object
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/template/object
 type TemplateObject struct {
-	TemplateID  int    `json:"templateid,omitempty"`
+	TemplateID  string `json:"templateid,omitempty"`
 	Host        string `json:"host,omitempty"`
 	Description string `json:"description,omitempty"`
 	Name        string `json:"name,omitempty"`
@@ -31,7 +31,7 @@ type TemplateObject struct {
 
 // TemplateTagObject struct is used to store template tag data
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/template/object#template_tag
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/template/object#template_tag
 type TemplateTagObject struct {
 	Tag   string `json:"tag,omitempty"`
 	Value string `json:"value,omitempty"`
@@ -41,17 +41,17 @@ type TemplateTagObject struct {
 
 // TemplateGetParams struct is used for template get requests
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/template/get#parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/template/get#parameters
 type TemplateGetParams struct {
 	GetParameters
 
-	TemplateIDs       []int `json:"templateids,omitempty"`
-	GroupIDs          []int `json:"groupids,omitempty"`
-	ParentTemplateIDs []int `json:"parentTemplateids,omitempty"`
-	HostIDs           []int `json:"hostids,omitempty"`
-	GraphIDs          []int `json:"graphids,omitempty"`
-	ItemIDs           []int `json:"itemids,omitempty"`
-	TriggerIDs        []int `json:"triggerids,omitempty"`
+	TemplateIDs       []string `json:"templateids,omitempty"`
+	GroupIDs          []string `json:"groupids,omitempty"`
+	ParentTemplateIDs []string `json:"parentTemplateids,omitempty"`
+	HostIDs           []string `json:"hostids,omitempty"`
+	GraphIDs          []string `json:"graphids,omitempty"`
+	ItemIDs           []string `json:"itemids,omitempty"`
+	TriggerIDs        []string `json:"triggerids,omitempty"`
 
 	WithItems     bool                `json:"with_items,omitempty"`
 	WithTriggers  bool                `json:"with_triggers,omitempty"`
@@ -78,12 +78,12 @@ type TemplateGetParams struct {
 
 // Structure to store creation result
 type templateCreateResult struct {
-	TemplateIDs []int `json:"templateids"`
+	TemplateIDs []string `json:"templateids"`
 }
 
 // Structure to store deletion result
 type templateDeleteResult struct {
-	TemplateIDs []int `json:"templateids"`
+	TemplateIDs []string `json:"templateids"`
 }
 
 // TemplateGet gets templates
@@ -100,7 +100,7 @@ func (z *Context) TemplateGet(params TemplateGetParams) ([]TemplateObject, error
 }
 
 // TemplateCreate creates templates
-func (z *Context) TemplateCreate(params []TemplateObject) ([]int, error) {
+func (z *Context) TemplateCreate(params []TemplateObject) ([]string, error) {
 
 	var result templateCreateResult
 
@@ -113,7 +113,7 @@ func (z *Context) TemplateCreate(params []TemplateObject) ([]int, error) {
 }
 
 // TemplateDelete deletes templates
-func (z *Context) TemplateDelete(templateIDs []int) ([]int, error) {
+func (z *Context) TemplateDelete(templateIDs []string) ([]string, error) {
 
 	var result templateDeleteResult
 

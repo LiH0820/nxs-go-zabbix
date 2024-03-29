@@ -74,7 +74,7 @@ const (
 
 // MediatypeObject struct is used to store mediatype operations results
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/mediatype/object
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/mediatype/object
 type MediatypeObject struct {
 	MediatypeID        int                                `json:"mediatypeid,omitempty"`
 	Name               string                             `json:"name,omitempty"`
@@ -112,7 +112,7 @@ type MediatypeObject struct {
 
 // MediatypeWebhookParametersObject struct is used for mediatypes webhook parameters
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/mediatype/object#webhook_parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/mediatype/object#webhook_parameters
 type MediatypeWebhookParametersObject struct {
 	Name  string `json:"name,omitempty"`
 	Value string `json:"value,omitempty"`
@@ -120,7 +120,7 @@ type MediatypeWebhookParametersObject struct {
 
 // MediatypeMessageTemplateObject struct is used for mediatypes message template
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/mediatype/object#message_template
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/mediatype/object#message_template
 type MediatypeMessageTemplateObject struct {
 	EventSource int    `json:"eventsource"` // has defined consts, see above
 	Recovery    int    `json:"recovery"`    // has defined consts, see above
@@ -130,7 +130,7 @@ type MediatypeMessageTemplateObject struct {
 
 // MediatypeGetParams struct is used for mediatype get requests
 //
-// see: https://www.zabbix.com/documentation/5.0/manual/api/reference/mediatype/get#parameters
+// see: https://www.zabbix.com/documentation/6.0/manual/api/reference/mediatype/get#parameters
 type MediatypeGetParams struct {
 	GetParameters
 

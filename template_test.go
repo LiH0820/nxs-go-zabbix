@@ -26,7 +26,7 @@ func TestTemplateCRUD(t *testing.T) {
 	testTemplateGet(t, z, tCreatedIDs, hgCreatedIDs)
 }
 
-func testTemplateCreate(t *testing.T, z *Context, tgCreatedIDs []int) []int {
+func testTemplateCreate(t *testing.T, z *Context, tgCreatedIDs []string) []string {
 
 	var groups []TemplategroupObject
 
@@ -56,7 +56,7 @@ func testTemplateCreate(t *testing.T, z *Context, tgCreatedIDs []int) []int {
 	return tCreatedIDs
 }
 
-func testTemplateDelete(t *testing.T, z *Context, tCreatedIDs []int) []int {
+func testTemplateDelete(t *testing.T, z *Context, tCreatedIDs []string) []string {
 
 	tDeletedIDs, err := z.TemplateDelete(tCreatedIDs)
 	if err != nil {
@@ -76,7 +76,7 @@ func testTemplateDelete(t *testing.T, z *Context, tCreatedIDs []int) []int {
 	return tDeletedIDs
 }
 
-func testTemplateGet(t *testing.T, z *Context, tCreatedIDs, hgCreatedIDs []int) []TemplateObject {
+func testTemplateGet(t *testing.T, z *Context, tCreatedIDs, hgCreatedIDs []string) []TemplateObject {
 
 	tObjects, err := z.TemplateGet(TemplateGetParams{
 		TemplateIDs: tCreatedIDs,

@@ -4,7 +4,7 @@ package zabbix
 //
 // see: https://www.zabbix.com/documentation/7.0/manual/api/reference/template/object
 type TemplategroupObject struct {
-	GroupID int    `json:"groupid,omitempty"`
+	GroupID string `json:"groupid,omitempty"`
 	Name    string `json:"name,omitempty"`
 	Uuid    string `json:"uuid,omitempty"`
 }
@@ -12,13 +12,13 @@ type TemplategroupObject struct {
 type TemplategroupGetParams struct {
 	GetParameters
 
-	GroupIDs          []int `json:"groupids,omitempty"`
-	TemplateIDs       []int `json:"templateids,omitempty"`
-	ParentTemplateIDs []int `json:"parentTemplateids,omitempty"`
-	HostIDs           []int `json:"hostids,omitempty"`
-	GraphIDs          []int `json:"graphids,omitempty"`
-	ItemIDs           []int `json:"itemids,omitempty"`
-	TriggerIDs        []int `json:"triggerids,omitempty"`
+	GroupIDs          []string `json:"groupids,omitempty"`
+	TemplateIDs       []string `json:"templateids,omitempty"`
+	ParentTemplateIDs []string `json:"parentTemplateids,omitempty"`
+	HostIDs           []string `json:"hostids,omitempty"`
+	GraphIDs          []string `json:"graphids,omitempty"`
+	ItemIDs           []string `json:"itemids,omitempty"`
+	TriggerIDs        []string `json:"triggerids,omitempty"`
 
 	WithItems          bool `json:"with_items,omitempty"`
 	WithItemPrototypes bool `json:"with_item_prototypes,omitempty"`
@@ -29,12 +29,12 @@ type TemplategroupGetParams struct {
 
 // Structure to store creation result
 type templategroupCreateResult struct {
-	GroupIDs []int `json:"groupids"`
+	GroupIDs []string `json:"groupids"`
 }
 
 // Structure to store deletion result
 type templategroupDeleteResult struct {
-	GroupIDs []int `json:"groupids"`
+	GroupIDs []string `json:"groupids"`
 }
 
 // TemplategroupGet gets template groups
@@ -44,7 +44,7 @@ func (z *Context) TemplategroupGet(params TemplategroupGetParams) (result []Temp
 }
 
 // TemplategroupCreate create template groups
-func (z *Context) TemplategroupCreate(params []TemplategroupObject) ([]int, error) {
+func (z *Context) TemplategroupCreate(params []TemplategroupObject) ([]string, error) {
 
 	var result templategroupCreateResult
 
@@ -57,7 +57,7 @@ func (z *Context) TemplategroupCreate(params []TemplategroupObject) ([]int, erro
 }
 
 // TemplategroupDelete delete template groups
-func (z *Context) TemplategroupDelete(groupIDs []int) ([]int, error) {
+func (z *Context) TemplategroupDelete(groupIDs []string) ([]string, error) {
 
 	var result templategroupDeleteResult
 

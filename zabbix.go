@@ -28,14 +28,28 @@ const (
 type Context struct {
 	sessionKey string
 	host       string
+
+	httpLogger func(*http.Request, *http.Response)
 }
 
-func NewContext(host, username, password string) (*Context, error) {
+type OptionFunc func(*Context)
+
+func OptionHttpLogger(f func(*http.Request, *http.Response)) OptionFunc {
+	return func(context *Context) {
+		context.httpLogger = f
+	}
+}
+
+func NewContext(host, username, password string, opts ...OptionFunc) (*Context, error) {
 	z := &Context{}
 
 	err := z.Login(host, username, password)
 	if err != nil {
 		return nil, err
+	}
+
+	for _, opt := range opts {
+		opt(z)
 	}
 
 	return z, nil
@@ -47,7 +61,7 @@ func DestroyContext(z *Context) {
 
 // GetParameters struct is used as embedded struct for some other structs within package
 //
-// see for details: https://www.zabbix.com/documentation/5.0/manual/api/reference_commentary#common_get_method_parameters
+// see for details: https://www.zabbix.com/documentation/6.0/manual/api/reference_commentary#common_get_method_parameters
 type GetParameters struct {
 	CountOutput            bool                   `json:"countOutput,omitempty"`
 	Editable               bool                   `json:"editable,omitempty"`
@@ -87,6 +101,33 @@ type responseData struct {
 		Data    string `json:"data"`
 	} `json:"error"`
 	ID int `json:"id"`
+}
+
+func (z *Context) ApiVersion() (string, error) {
+
+	var result string
+
+	resp := responseData{
+		Result: &result,
+	}
+
+	req := requestData{
+		JsonRPC: "2.0",
+		Method:  "apiinfo.version",
+		Params:  []string{},
+		ID:      atomic.AddUint64(&requestID, 1),
+	}
+
+	_, err := z.httpPost(req, &resp)
+	if err != nil {
+		return result, err
+	}
+
+	if resp.Error.Code != 0 {
+		return result, errors.New(resp.Error.Data + " " + resp.Error.Message)
+	}
+
+	return result, err
 }
 
 // Login gets the Zabbix session
@@ -171,6 +212,12 @@ func (z *Context) httpPost(in interface{}, out interface{}) (int, error) {
 	}
 
 	defer res.Body.Close()
+
+	if z.httpLogger != nil {
+		req1, _ := http.NewRequest("POST", z.host, strings.NewReader(string(s)))
+		req1.Header.Add("Content-Type", "application/json-rpc")
+		z.httpLogger(req1, res)
+	}
 
 	if res.StatusCode != 200 {
 		if bodyBytes, err := io.ReadAll(res.Body); err == nil {

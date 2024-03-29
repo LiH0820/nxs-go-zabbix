@@ -2,7 +2,6 @@ package zabbix
 
 import (
 	"reflect"
-	"strconv"
 	"testing"
 )
 
@@ -24,14 +23,14 @@ func TestActionCRUD(t *testing.T) {
 	defer testHostgroupDelete(t, z, hgCreatedIDs)
 
 	// Create and delete
-	aCreatedIDs := testActionCreate(t, z, hgCreatedIDs[0], 7)
+	aCreatedIDs := testActionCreate(t, z, hgCreatedIDs[0], "7")
 	defer testActionDelete(t, z, aCreatedIDs)
 
 	// Get
 	testActionGet(t, z, aCreatedIDs)
 }
 
-func testActionCreate(t *testing.T, z *Context, hostgrpID, usergrpID int) []int {
+func testActionCreate(t *testing.T, z *Context, hostgrpID, usergrpID string) []string {
 
 	aCreatedIDs, err := z.ActionCreate([]ActionObject{
 		{
@@ -49,7 +48,7 @@ func testActionCreate(t *testing.T, z *Context, hostgrpID, usergrpID int) []int 
 					{
 						ConditionType: ActionFilterConditionTypeHostroup,
 						Operator:      ActionFilterConditionOperatorEQ,
-						Value:         strconv.Itoa(hostgrpID),
+						Value:         hostgrpID,
 					},
 				},
 			},
@@ -94,7 +93,7 @@ func testActionCreate(t *testing.T, z *Context, hostgrpID, usergrpID int) []int 
 	return aCreatedIDs
 }
 
-func testActionDelete(t *testing.T, z *Context, aCreatedIDs []int) []int {
+func testActionDelete(t *testing.T, z *Context, aCreatedIDs []string) []string {
 
 	aDeletedIDs, err := z.ActionDelete(aCreatedIDs)
 	if err != nil {
@@ -114,7 +113,7 @@ func testActionDelete(t *testing.T, z *Context, aCreatedIDs []int) []int {
 	return aDeletedIDs
 }
 
-func testActionGet(t *testing.T, z *Context, aCreatedIDs []int) []ActionObject {
+func testActionGet(t *testing.T, z *Context, aCreatedIDs []string) []ActionObject {
 
 	aObjects, err := z.ActionGet(ActionGetParams{
 		SelectOperations: SelectExtendedOutput,
