@@ -95,12 +95,8 @@ type requestData struct {
 type responseData struct {
 	JsonRPC string      `json:"jsonrpc"`
 	Result  interface{} `json:"result"`
-	Error   struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-		Data    string `json:"data"`
-	} `json:"error"`
-	ID int `json:"id"`
+	Error   Error       `json:"error"`
+	ID      int         `json:"id"`
 }
 
 func (z *Context) ApiVersion() (string, error) {
@@ -123,8 +119,8 @@ func (z *Context) ApiVersion() (string, error) {
 		return result, err
 	}
 
-	if resp.Error.Code != 0 {
-		return result, errors.New(resp.Error.Data + " " + resp.Error.Message)
+	if resp.Error.IsOk() {
+		return result, resp.Error
 	}
 
 	return result, err
@@ -184,8 +180,8 @@ func (z *Context) request(method string, params interface{}, result interface{})
 		return err
 	}
 
-	if resp.Error.Code != 0 {
-		return errors.New(resp.Error.Data + " " + resp.Error.Message)
+	if resp.Error.IsOk() {
+		return resp.Error
 	}
 
 	return nil
